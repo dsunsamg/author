@@ -3,12 +3,24 @@ const navLinks = document.querySelector('.nav__links');
 const galleryTrack = document.querySelector('.gallery__track');
 const galleryButtons = document.querySelectorAll('.gallery__btn');
 const sections = document.querySelectorAll('section');
+const imageElements = document.querySelectorAll('[data-image-key]');
+const imageMap = window.KINDNESS_IMAGES || {};
 const observerOptions = {
   threshold: 0.1,
 };
 
 let currentSlide = 0;
 const totalSlides = galleryTrack ? galleryTrack.children.length : 0;
+
+imageElements.forEach((img) => {
+  const key = img.dataset.imageKey;
+  if (key && imageMap[key]) {
+    img.src = imageMap[key];
+    if (!img.hasAttribute('loading')) {
+      img.loading = 'lazy';
+    }
+  }
+});
 
 if (navToggle && navLinks) {
   navToggle.addEventListener('click', () => {
